@@ -51,22 +51,19 @@ def get_magnitude(loaded_data):
 def get_location(loaded_data):
     """Retrieve the latitude and longitude of an earthquake item."""
     # There are three coordinates, but we don't care about the third (altitude)
-    coordinates = loaded_data["geometry"]["coordinates"]
-    latitude = coordinates[0]
-    longitude = coordinates[1]
-    return (latitude,longitude)
+    coordinates = loaded_data["geometry"]["coordinates"][:2]
+    return (coordinates)
 
 
 def get_maximum(loaded_data):
     """Get the magnitude and location of the strongest earthquake in the data."""
     mag = [get_magnitude(x) for x in loaded_data["features"]]
     max_mag = max(mag)
-    print(max_mag)
+    max_locations =[]
     for y in loaded_data["features"]:
          if get_magnitude(y) == max_mag:
-             max_location = get_location(y)
-             break
-    return max_mag, max_location
+             max_locations.append(get_location(y))
+    return max_mag, max_locations
     
 
 
