@@ -3,7 +3,7 @@
 # However, we will use a more powerful and simpler library called requests.
 # This is external library that you may need to install first.
 import requests
-import json
+
 
 def get_data():
     # With requests, we can ask the web service for the data.
@@ -27,44 +27,38 @@ def get_data():
     # To understand the structure of this text, you may want to save it
     # to a file and open it in VS Code or a browser.
     # See the README file for more information.
-    data = json.loads(text)
-    with open('earthquake.json', 'w') as f:
-         json.dump(data, f, indent=4)
-
-    with open('earthquake.json', 'r') as f:
-        loaded_data = json.load(f)
+    ...
 
     # We need to interpret the text to get values that we can work with.
     # What format is the text in? How can we load the values?
-    return loaded_data
+    return ...
 
-def count_earthquakes(loaded_data):
+def count_earthquakes(data):
     """Get the total number of earthquakes in the response."""
-    return len(loaded_data["features"])
+    return ...
 
 
-def get_magnitude(loaded_data):
+def get_magnitude(earthquake):
     """Retrive the magnitude of an earthquake item."""
-    return loaded_data["properties"]["mag"]
+    return ...
 
 
-def get_location(loaded_data):
+def get_location(earthquake):
     """Retrieve the latitude and longitude of an earthquake item."""
     # There are three coordinates, but we don't care about the third (altitude)
-    coordinates = loaded_data["geometry"]["coordinates"][:2]
-    return (coordinates)
+    return ...
 
 
-def get_maximum(loaded_data):
+def get_maximum(data):
     """Get the magnitude and location of the strongest earthquake in the data."""
-    mag = [get_magnitude(x) for x in loaded_data["features"]]
-    max_mag = max(mag)
-    max_locations =[]
-    for y in loaded_data["features"]:
-         if get_magnitude(y) == max_mag:
-             max_locations.append(get_location(y))
-    return max_mag, max_locations
-    
+    ...
+
+
+# With all the above functions defined, we can now call them and get the result
+data = get_data()
+print(f"Loaded {count_earthquakes(data)}")
+max_magnitude, max_location = get_maximum(data)
+print(f"The strongest earthquake was at {max_location} with magnitude {max_magnitude}")
 
 
 # With all the above functions defined, we can now call them and get the result
